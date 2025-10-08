@@ -1,4 +1,4 @@
-package day_six;
+package day_sixx;
 
 public class WithoutExceptionHandling {
 

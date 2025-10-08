@@ -1,4 +1,4 @@
-package day_six;
+package day_sixx;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 public class FinallyBlock {
