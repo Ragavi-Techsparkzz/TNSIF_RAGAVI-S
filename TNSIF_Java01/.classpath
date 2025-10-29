@@ -11,5 +11,6 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/Ragavi.s/Downloads/postgresql-42.7.7.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
