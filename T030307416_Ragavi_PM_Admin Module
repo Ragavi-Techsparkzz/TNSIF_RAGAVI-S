@@ -1,0 +1,7 @@
+The Admin Module focuses on understanding backend workflow using Spring Boot, PostgreSQL (pgAdmin), and Postman.
+
+⚙️ Learned to set up and run a Spring Boot project with database connectivity.
+🗄️ Used pgAdmin to create and manage tables in PostgreSQL.
+📬 Tested backend responses and CRUD operations using Postman.
+
+💡 This module strengthened my knowledge of backend integration, data handling, and testing tools.
