@@ -1,0 +1,183 @@
+<div class="container-fluid py-5" style="background: linear-gradient(to bottom right,#dac4ff,#fad0c4); min-height:100vh;">
+  <div class="row justify-content-center">
+    <!-- Admin Image/Icon -->
+    <div class="col-12 text-center mb-4">
+      <img src="https://cdn-icons-png.flaticon.com/512/942/942748.png" alt="Admin Placement" style="width:90px;">
+    </div>
+    <!-- Admin Database Form (wider and modern) -->
+    <div class="col-lg-6 col-md-8">
+      <div class="card shadow-lg rounded-4 px-4 py-5" style="border: none; background: #fff9fd;">
+        <form #registerForm="ngForm" (ngSubmit)="register(registerForm)">
+          <h2 class="my-2 text-center fw-bold" style="letter-spacing: 1px;">Admin Database</h2>
+
+          <!-- Name -->
+          <div class="form-floating mb-4">
+            <input
+              id="name"
+              required
+              minlength="3"
+              #name="ngModel"
+              ngModel
+              name="name"
+              type="text"
+              class="form-control form-control-lg"
+              placeholder="Name"
+              style="padding-left: 40px;">
+            <label for="name"><span class="me-2">👤</span>Name</label>
+            <div *ngIf="(name.invalid && (name.touched || formSubmitted))">
+              <small class="text-danger" *ngIf="name.errors?.['required']">Invalid name: required.</small>
+              <small class="text-danger" *ngIf="name.errors?.['minlength']">Name must be at least 3 characters.</small>
+            </div>
+          </div>
+
+          <!-- Email -->
+          <div class="form-floating mb-4">
+            <input
+              id="email"
+              required
+              email
+              #email="ngModel"
+              ngModel
+              name="email"
+              type="email"
+              class="form-control form-control-lg"
+              placeholder="Email"
+              style="padding-left: 40px;">
+            <label for="email"><span class="me-2">📧</span>Email</label>
+            <div *ngIf="(email.invalid && (email.touched || formSubmitted))">
+              <small class="text-danger" *ngIf="email.errors?.['required']">Invalid email: required.</small>
+              <small class="text-danger" *ngIf="email.errors?.['email']">Invalid email format.</small>
+            </div>
+          </div>
+
+          <!-- Phone Number -->
+          <div class="form-floating mb-4">
+            <input
+              id="phoneNumber"
+              required
+              pattern="^[0-9]{10}$"
+              #phoneNumber="ngModel"
+              ngModel
+              name="phoneNumber"
+              type="tel"
+              class="form-control form-control-lg"
+              placeholder="Phone Number"
+              style="padding-left: 40px;">
+            <label for="phoneNumber"><span class="me-2">📱</span>Phone Number</label>
+            <div *ngIf="(phoneNumber.invalid && (phoneNumber.touched || formSubmitted))">
+              <small class="text-danger" *ngIf="phoneNumber.errors?.['required']">Invalid phone: required.</small>
+              <small class="text-danger" *ngIf="phoneNumber.errors?.['pattern']">
+                Invalid phone format (must be 10 digits only).
+              </small>
+            </div>
+          </div>
+
+          <!-- Submit Button -->
+          <div class="form-group text-center">
+            <input class="btn btn-lg btn-success px-5 py-2" type="submit" value="Submit">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Table Section -->
+  <div class="row mt-5">
+    <div class="col">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone Number</th>
+            <th>Edit</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let admin of adminDetails">
+            <td>{{admin.id}}</td>
+            <td>{{admin.name}}</td>
+            <td>{{admin.email}}</td>
+            <td>{{admin.phoneNumber}}</td>
+            <td>
+              <button
+                type="button"
+                class="btn btn-primary"
+                data-bs-toggle="modal"
+                data-bs-target="#editModal"
+                (click)="edit(admin)">
+                Edit
+              </button>
+            </td>
+            <td>
+              <button
+                type="button"
+                class="btn btn-danger"
+                (click)="deleteAdmin(admin)">
+                Delete
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Modal for Editing Admin -->
+  <div class="modal" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editModalLabel">Edit Admin</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form (ngSubmit)="updateAdmin()">
+            <div class="mb-3">
+              <label for="editName" class="form-label">Name</label>
+              <input
+                id="editName"
+                [(ngModel)]="adminToUpdate.name"
+                name="name"
+                type="text"
+                class="form-control"
+                required>
+            </div>
+            <div class="mb-3">
+              <label for="editEmail" class="form-label">Email</label>
+              <input
+                id="editEmail"
+                [(ngModel)]="adminToUpdate.email"
+                name="email"
+                type="email"
+                class="form-control"
+                required>
+            </div>
+            <div class="mb-3">
+              <label for="editPhone" class="form-label">Phone Number</label>
+              <input
+                id="editPhone"
+                [(ngModel)]="adminToUpdate.phoneNumber"
+                name="phoneNumber"
+                type="tel"
+                class="form-control"
+                required>
+            </div>
+            <div class="form-group text-center">
+              <button type="submit" class="btn btn-primary">Update</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ✅ Success Popup -->
+  <div *ngIf="showSuccessPopup" class="popup-overlay">
+    <div class="popup-content">
+      <h5>✅ Submitted Successfully!</h5>
+    </div>
+  </div>
+</div>
